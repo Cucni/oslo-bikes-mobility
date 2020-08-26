@@ -1,3 +1,7 @@
 *.zip
+*.png
+*.pdf
+*.log
+*.txt
 history
 __pycache__
