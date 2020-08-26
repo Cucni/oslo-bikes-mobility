@@ -1,0 +1,10 @@
+image: python:3.7
+
+job:
+    stage: deploy
+    script:
+        - pip install numpy==1.16.2 pandas==0.23.3 matplotlib==3.0.2
+        - python3 variation.py
+    artifacts:
+        paths:
+            - "*.pdf"
