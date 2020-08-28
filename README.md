@@ -2,7 +2,7 @@
 
 The aim of this project is to deduce insights about public mobility in Oslo, through the analysis of the data on public shared bikes of the city.
 
-### April 2020 mobility data and Covid-19 lockdown ###
+## April 2020 mobility data and Covid-19 lockdown ##
 
 The first study aims to deduce insights about the intensity of the lockdown at Oslo in April.
 
@@ -17,11 +17,17 @@ There are two interconnected questions I am trying to answer with this analysis:
  - Were people going out more as the weeks passed, as result of a general relaxation about lockdown measures?
  - Were people going out more, as the result of less strict lockdown measures?
 
-## Code ##
+### Code ###
 
 The file [April.ipynb](April.ipynb) contains the actual analysis, with all the code, the charts and the comments and deductions one can make (or try to make). It is a jupyter notebook file that you can visualise directly in the browser.
 
 For ease of use and transparency, the CSV files ['04-2019.csv']('04-2019.csv') and ['04-2020.csv']('04-2020.csv') with the data on April 2019 and 2020 are included in the repository.
+
+## Estimate of variation in mobility and use as proxy for overall mobility ##
+
+The second study aims to estimate the variation in the public bike mobility, and to compare it agains the variation in the overall mobility as estimated by Google. This could give some indication of how good of a proxy public bike mobility is, with respect to overall mobility.
+
+This study is still a work in progress heavily.
 
 ## Technologies ##
 
