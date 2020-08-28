@@ -44,7 +44,7 @@ plt.savefig('total_rides.pdf')
 
 plt.figure()
 variation.plot()
-plt.title("Relative variation in the number of rides from 2019 to 2020")
+plt.title("5-day Rolling relative variation in the number of rides from 2019 to 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Percentage variation")
 plt.savefig('variation.pdf')
