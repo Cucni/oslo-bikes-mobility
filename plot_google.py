@@ -10,7 +10,7 @@ plt.style.use('seaborn')
 
 df = pd.read_csv("GOG-Global_Mobility_Report.csv",parse_dates=[7])
 #df_month = df[df["date"].dt.month.isin([5,6,7])].copy()
-sns.lineplot(data=df[df["date"].dt.month.isin([5,6,7])],x="date",y="transit_stations_percent_change_from_baseline")
+sns.lineplot(data=df[df["date"].dt.month.isin([5,6,7,8])],x="date",y="transit_stations_percent_change_from_baseline")
 plt.title("Google's relative variation in transit stations mobility")
 plt.ylabel("Transit stations percent variation from baseline")
 plt.xticks(rotation=45)

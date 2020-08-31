@@ -10,7 +10,7 @@ plt.style.use('seaborn')
 
 datasets19 = {}
 datasets20 = {}
-months = ['05','06','07']
+months = ['05','06','07','08']
 
 for month in months:
     datasets19[month] = pd.read_csv('https://data.urbansharing.com/oslobysykkel.no/trips/v1/2019/'+month+'.csv',parse_dates=[0,1])
