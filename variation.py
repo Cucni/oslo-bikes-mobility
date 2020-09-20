@@ -5,7 +5,9 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 from public_bikes_functions import load_years
+from plot_google import load_google
 
 plt.style.use('seaborn')
 
@@ -43,3 +45,18 @@ plt.title("5-day Rolling relative variation in the number of rides from 2019 to 
 plt.xlabel("Day of the year")
 plt.ylabel("Percentage variation")
 plt.savefig('variation.pdf')
+
+df_google = load_google()
+
+#Variation is a Series. When we join a Dataframe with a Series, the Series data are joined in the table as a column, but the name of the column is the name of the series so it must have a name (nameless series throw errors). Also, since we want to join on the "day of the year" feature, which is the index in the Series, we name it as "doy", which is the name it has in the Google dataframe. In this joining on "doy" is straightforward.
+variation.index.name = 'doy'
+variation.name = 'Public bikes variation'
+df_joined = df_google.join(variation,on="doy",how="left")
+
+
+sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='transit_stations_percent_change_from_baseline',color='tab:blue',label='Google')
+sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='Public bikes variation',color='tab:orange',label='Public bikes')
+plt.legend()
+plt.title("Comparison of Google's variation and public bikes variation")
+plt.ylabel("Percent variation from baseline")
+plt.savefig("variation_comparison.pdf")
