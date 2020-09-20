@@ -5,19 +5,14 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from public_bikes_functions import load_years
 
 plt.style.use('seaborn')
 
-datasets19 = {}
-datasets20 = {}
 months = ['05','06','07','08']
 
-for month in months:
-    datasets19[month] = pd.read_csv('https://data.urbansharing.com/oslobysykkel.no/trips/v1/2019/'+month+'.csv',parse_dates=[0,1])
-    datasets20[month] = pd.read_csv('https://data.urbansharing.com/oslobysykkel.no/trips/v1/2020/'+month+'.csv',parse_dates=[0,1])
-
-df_19 = pd.concat(datasets19)
-df_20 = pd.concat(datasets20)
+df_19 = load_years('2019',months)
+df_20 = load_years('2020',months)
 
 daily_2019 = df_19.groupby(df_19['started_at'].dt.date).count()['started_at']
 daily_2020 = df_20.groupby(df_20['started_at'].dt.date).count()['started_at']
