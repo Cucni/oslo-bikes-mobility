@@ -27,7 +27,9 @@ For ease of use and transparency, the CSV files ['04-2019.csv']('04-2019.csv') a
 
 The second study aims to estimate the variation in the public bike mobility, and to compare it agains the variation in the overall mobility as estimated by Google. This could give some indication of how good of a proxy public bike mobility is, with respect to overall mobility.
 
-This study is still a work in progress heavily.
+### Code ###
+
+The file [variation.py](variation.py) is the main script. It loads public bikes data and processes it to compute the relative variation in the period from May to August. It also loads Google's data and compares the two. The script ['public_bikes_functions.py']('public_bikes_functions.py') contains the function to load and preprocess public bikes data. The script ['plot_google.py']('plot_google.py') contains the functions to load, preprocess and plot Google's data. If run standalone, it plots the relative variation in transit stations mobility, as computed by Google.
 
 ## Technologies ##
 
@@ -37,7 +39,7 @@ Python 3.5.2, Numpy 1.18.2, Pandas 0.24.2, Matplotlib 3.0.2, Seaborn 0.9.0
 
 The currently used data is updated at May 22, 2020. The data about April is complete.
 
-The data comes directly from the service:
+The data on Oslo public bikes comes directly from the service:
 
 https://oslobysykkel.no/en/open-data
 
@@ -46,3 +48,8 @@ It is available under the NLOD license (Norwegian Licence for Open Government Da
 https://data.norge.no/nlod/no/2.0
 
 In particular it is free to use for personal study and research, upon correct attribution.
+
+Data from Google comes from its published mobility reports, as found at
+
+_"Google COVID-19 Community Mobility Reports"_
+https://www.google.com/covid19/mobility/
