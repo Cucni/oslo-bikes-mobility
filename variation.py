@@ -51,7 +51,7 @@ variation.plot()
 plt.title("5-day Rolling relative variation in the number of rides from 2019 to 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Percentage variation")
-plt.savefig('variation.pdf')
+plt.savefig('rides_variation.pdf')
 
 #Load Google's dataset, for comparison
 df_google = load_google()
@@ -67,5 +67,6 @@ sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],
 sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='Public bikes variation',color='tab:orange',label='Public bikes')
 plt.legend()
 plt.title("Comparison of Google's variation and public bikes variation")
+plt.xlabel("Day of the year")
 plt.ylabel("Percent variation from baseline")
-plt.savefig("variation_comparison.pdf")
+plt.savefig("comparison_variations.pdf")
