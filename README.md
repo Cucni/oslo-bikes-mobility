@@ -29,7 +29,7 @@ The second study aims to estimate the variation in the public bike mobility, and
 
 ### Code ###
 
-The file [variation.py](variation.py) is the main script. It loads public bikes data and processes it to compute the relative variation in the period from May to August. It also loads Google's data and compares the two. The script ['public_bikes_functions.py']('public_bikes_functions.py') contains the function to load and preprocess public bikes data. The script ['plot_google.py']('plot_google.py') contains the functions to load, preprocess and plot Google's data. If run standalone, it plots the relative variation in transit stations mobility, as computed by Google.
+The file [main.py](main.py) is the main script. It loads public bikes data and processes it to compute the relative variation in the period from May to August. It also loads Google's data and compares the two. The script ['public_bikes_functions.py']('public_bikes_functions.py') contains the function to load and preprocess public bikes data. The script ['plot_google.py']('plot_google.py') contains the functions to load, preprocess and plot Google's data. If run standalone, it plots the relative variation in transit stations mobility, as computed by Google.
 
 ## Technologies ##
 
