@@ -4,8 +4,8 @@ job:
     stage: deploy
     script:
         - pip install numpy==1.16.2 pandas==0.23.3 matplotlib==3.0.2 seaborn==0.9.0
-        - python3 main.py
-        - python3 plot_google.py
+        - python3 src/main.py
+        - python3 src/plot_google.py
     artifacts:
         paths:
             - "*.pdf"
