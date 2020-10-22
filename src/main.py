@@ -11,6 +11,9 @@ from plot_google import load_google
 
 plt.style.use('seaborn')
 
+#Folder where to save output figures
+FIGURES_FOLDER = 'figures/'
+
 #Range of months that we are analyzing
 months = ['05','06','07','08']
 
@@ -43,7 +46,7 @@ rolling.plot(color=['tab:blue','tab:orange'])
 plt.title("5-day Rides rolling average in 2019 and 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Number of rides")
-plt.savefig('total_rides.pdf')
+plt.savefig(FIGURES_FOLDER + 'total_rides.pdf')
 
 #Plot the relative variation
 plt.figure()
@@ -51,7 +54,7 @@ variation.plot()
 plt.title("5-day Rolling relative variation in the number of rides from 2019 to 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Percentage variation")
-plt.savefig('rides_variation.pdf')
+plt.savefig(FIGURES_FOLDER + 'rides_variation.pdf')
 
 #Load Google's dataset, for comparison
 df_google = load_google()
@@ -69,4 +72,4 @@ plt.legend()
 plt.title("Comparison of Google's variation and public bikes variation")
 plt.xlabel("Day of the year")
 plt.ylabel("Percent variation from baseline")
-plt.savefig("comparison_variations.pdf")
+plt.savefig(FIGURES_FOLDER + 'comparison_variations.pdf')
