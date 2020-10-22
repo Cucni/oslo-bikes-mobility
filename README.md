@@ -8,7 +8,7 @@ The goal of the first study is to deduce insights about the intensity of the loc
 
 The motivation for this study is to try to use data to find possible trends or interesting insights about biking mobility, and possibly overall mobility; and then use these findings to draw deductions on the lockdown.
 
-The naive observation at the time was that people apparently started to get out more in mid-April, to be less concerned about crowded places and in general more relaxed about the Covid-19 contagion risk. I then created this project in order to check if these observations were backed by mobility data. In general, the harder the lockdown, the fewer the people travelling. Therefore we should be able to assess how strong the restrictions are, and how closely people are following them, by looking at mobility data.
+The naive observation at the time was that people apparently started to get out more in mid-April, to be less concerned about crowded places and in general more relaxed about the Covid-19 contagion risk. I then created this project in order to check if these observations were backed by mobility data. In general, the harder the lockdown, the fewer the people travelling. Therefore I should be able to assess how strong the restrictions are, and how closely people are following them, by looking at mobility data.
 
 
 There are two interconnected questions I am trying to answer with this analysis:
