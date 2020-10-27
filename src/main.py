@@ -15,7 +15,7 @@ plt.style.use('seaborn')
 FIGURES_FOLDER = 'figures/'
 
 #Range of months that we are analyzing
-months = ['05','06','07','08']
+months = ['05','06','07','08','09']
 
 #We build the dataset of public bikes data for those years
 df_19 = load_years('2019',months)
