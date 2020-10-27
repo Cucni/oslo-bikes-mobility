@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 plt.style.use('seaborn')
 
 def load_google():
-    df = pd.read_csv("Google-Global_Mobility_Report.csv",parse_dates=[7])
+    df = pd.read_csv("data/clean/Google-Global_Mobility_Report.csv",parse_dates=[7])
     df["doy"] = df["date"].dt.dayofyear
     return df
 
