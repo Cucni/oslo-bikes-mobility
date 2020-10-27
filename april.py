@@ -26,6 +26,7 @@ def aggregate_by_day(dataframe):
     days_df['Year'] = dataframe.loc[0,'started_at'].year
     return days_df
 
+#Function that takes two dataframes with rides (in two different years), and returns a unique dataframes with all the data, aggregated by year and by weekday. Resulting columns are the total number of rides and the total rides duration. Note: it is specific for the study of the Oslo public bikes data, so the columns "started_at" and "duration" are always present
 def joint_aggregate_by_weekday(dataframe1,dataframe2):
     df = pd.concat([dataframe1,dataframe2])
     mask_weekday = np.where(df['started_at'].dt.weekday<5,"Weekday","Weekend")
@@ -37,6 +38,7 @@ def joint_aggregate_by_weekday(dataframe1,dataframe2):
     return df_weekday
 
 
+#Function that takes two dataframes with rides (in two different years), and returns a unique dataframes with all the data, aggregated by year, week and weekday. Resulting columns are the total number of rides and the total rides duration. Note: it is specific for the study of the Oslo public bikes data, so the columns "started_at" and "duration" are always present
 def joint_aggregate_by_week(dataframe1,dataframe2):
     df = pd.concat([dataframe1,dataframe2])
     mask_weekday = np.where(df['started_at'].dt.weekday<5,"Weekday","Weekend")
@@ -48,6 +50,7 @@ def joint_aggregate_by_week(dataframe1,dataframe2):
     return df_week
 
 
+#Function that takes a dataframe containing data on rides and plots the relative variation between 2020 and 2019. It plots the relative variation of the following quantities: Total rides, Total duration and Average ride duration (computed from the other two). It uses a bar plot.
 def plot_rel_variations(dataframe):
     _variation = (dataframe.loc[2020,'Total rides'] / dataframe.loc[2019,'Total rides']) - 1
     _variation = _variation.to_frame(name='Total rides')
@@ -61,6 +64,8 @@ def plot_rel_variations(dataframe):
 
     display(_variation)
  
+
+#Function that takes a dataframe containing data on rides and plots the relative variation between 2020 and 2019, by week. It plots separately the relative variation of Total rides and Total duration, with two bar plots. The data is further separated (with the "hue" parameter) by weekday.
 def plot_weekly_var(dataframe):
     _week_var = ((dataframe.loc[2020] / dataframe.loc[2019]) - 1).reset_index()
     plt.subplot(121)
