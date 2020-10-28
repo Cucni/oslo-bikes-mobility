@@ -56,8 +56,6 @@ variation_daily = ((daily_2020 / daily_2019) - 1)*100
 #We compute the 5-day rolling average of number of rides in both years
 rolling_2019 = daily_2019.rolling(window=5,min_periods=3).mean()
 rolling_2020 = daily_2020.rolling(window=5,min_periods=3).mean()
-rolling_2019.index = rolling_2019.index.astype("datetime64[ns]").dayofyear
-rolling_2020.index = rolling_2020.index.astype("datetime64[ns]").dayofyear
 
 
 #Compute the relative variation. This is a series
