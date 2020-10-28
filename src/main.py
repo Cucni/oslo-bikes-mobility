@@ -61,13 +61,13 @@ rolling = pd.concat([rolling_2019,rolling_2020],axis=1)
 #Compute the relative variation of the rolling averages. This is a series
 variation_rolling = ((rolling_2020/rolling_2019) - 1)*100
 
-#Plot the rolling averages for 2019 and 2020 alongside
+#Plot the rolling average of total rides for 2019 and 2020 alongside
 rolling['Total rides'].plot(color=['tab:blue','tab:orange'])
-plt.title("5-day Rides rolling average in 2019 and 2020")
+plt.title("5-day Total Rides rolling average in 2019 and 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Number of rides")
 plt.legend(['2019','2020'])
-plt.savefig(FIGURES_FOLDER + 'total_rides.pdf')
+plt.savefig(FIGURES_FOLDER + 'rolling_total_average.pdf')
 
 #Plot the relative variation
 plt.figure()
@@ -75,7 +75,7 @@ variation_rolling.plot()
 plt.title("5-day Rolling relative variation in the number and duration of rides from 2019 to 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Percentage variation")
-plt.savefig(FIGURES_FOLDER + 'rides_variation.pdf')
+plt.savefig(FIGURES_FOLDER + 'rolling_variation.pdf')
 
 #Load Google's dataset, for comparison
 df_google = load_google()
