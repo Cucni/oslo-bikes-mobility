@@ -40,8 +40,8 @@ newindex = daily_2019.index.union(daily_2020.index)
 daily_2019 = daily_2019.reindex(newindex)
 daily_2020 = daily_2020.reindex(newindex)
 
-daily_2019.index.name = 'DOY'
-daily_2020.index.name = 'DOY'
+daily_2019.index.name = 'doy'
+daily_2020.index.name = 'doy'
 
 #Form big dataframe with union of the data
 daily = pd.concat([daily_2019,daily_2020],axis=1)
@@ -82,16 +82,16 @@ plt.savefig(FIGURES_FOLDER + 'rides_variation.pdf')
 #Load Google's dataset, for comparison
 df_google = load_google()
 
-#Variation is a Series. When we join a Dataframe with a Series, the Series data are joined in the table as a column, but the name of the column is the name of the series so it must have a name (nameless series throw errors). Also, since we want to join on the "day of the year" feature, which is the index in the Series, we name it as "doy", which is the name it has in the Google dataframe. In this joining on "doy" is straightforward.
-variation.index.name = 'doy'
-variation.name = 'Public bikes variation'
-df_joined = df_google.join(variation,on="doy",how="left") #dataframe with joined data
+#We join the Dataframe with Google's data with the one with rolling variation data. We want to join on the "day of the year" feature, which is the index in the rolling Dataframe, named "doy" in the Google dataframe. Since it is the same name of the rolling dataframe index, joining on "doy" is straightforward.
+#If variation were a Series, then it would have been joined in the table as a column, but the name of the column would have been the name of the series so it would have needed a name (nameless series throw errors).
+variation_rolling.columns = ['Total rides variation','Total duration variation']
+df_joined = df_google.join(variation_rolling,on="doy",how="left") #dataframe with joined data
 
 
 #Plot Google's and public bikes' data alongside. What we are plotting is the relative variation from baseline, from 2019 to 2020, in mobility. Google's data pertains all the mobility in transit stations, while the bikes' data only refers to the use of public bikes. The comparison attempt to evaluate how well the data on public bikes describes broader data.
 plt.figure()
 sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='transit_stations_percent_change_from_baseline',color='tab:blue',label='Google')
-sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='Public bikes variation',color='tab:orange',label='Public bikes')
+sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='Total rides variation',color='tab:orange',label='Public bikes')
 plt.legend()
 plt.title("Comparison of Google's variation and public bikes variation")
 plt.xlabel("Day of the year")
