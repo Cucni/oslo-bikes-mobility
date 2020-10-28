@@ -57,10 +57,11 @@ variation_daily = ((daily_2020 / daily_2019) - 1)*100
 rolling_2019 = daily_2019.rolling(window=5,min_periods=3).mean()
 rolling_2020 = daily_2020.rolling(window=5,min_periods=3).mean()
 
-
-#Compute the relative variation. This is a series
-variation = ((rolling_2020/rolling_2019) - 1)*100
+#Form big dataframe with union of the rolling data
 rolling = pd.concat([rolling_2019,rolling_2020],axis=1)
+
+#Compute the relative variation of the rolling averages. This is a series
+variation_rolling = ((rolling_2020/rolling_2019) - 1)*100
 
 #Plot the rolling averages for 2019 and 2020 alongside
 rolling.plot(color=['tab:blue','tab:orange'])
