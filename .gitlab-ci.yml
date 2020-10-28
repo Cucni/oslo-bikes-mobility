@@ -9,3 +9,4 @@ job:
     artifacts:
         paths:
             - "*.pdf"
+            - "figures/*.pdf"
