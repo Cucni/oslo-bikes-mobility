@@ -64,10 +64,11 @@ rolling = pd.concat([rolling_2019,rolling_2020],axis=1)
 variation_rolling = ((rolling_2020/rolling_2019) - 1)*100
 
 #Plot the rolling averages for 2019 and 2020 alongside
-rolling.plot(color=['tab:blue','tab:orange'])
+rolling['Total rides'].plot(color=['tab:blue','tab:orange'])
 plt.title("5-day Rides rolling average in 2019 and 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Number of rides")
+plt.legend(['2019','2020'])
 plt.savefig(FIGURES_FOLDER + 'total_rides.pdf')
 
 #Plot the relative variation
