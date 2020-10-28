@@ -37,11 +37,9 @@ daily_2020.index = daily_2020.index.astype("datetime64[ns]").dayofyear
 
 #We reindex against the union of the indexes. This is needed because in a certain year there may be missing data for a particular day, and we are filling those days with NaN data. The reason we are doing this is because when performing operations like computations and unions it is easier to have matching indices (and we can also easily refer to missing data by checking NaNs).
 newindex = daily_2019.index.union(daily_2020.index)
+newindex.name = 'doy'
 daily_2019 = daily_2019.reindex(newindex)
 daily_2020 = daily_2020.reindex(newindex)
-
-daily_2019.index.name = 'doy'
-daily_2020.index.name = 'doy'
 
 #Form big dataframe with union of the data
 daily = pd.concat([daily_2019,daily_2020],axis=1)
