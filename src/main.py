@@ -21,14 +21,37 @@ months = ['05','06','07','08','09']
 df_19 = load_years('2019',months)
 df_20 = load_years('2020',months)
 
-#We now separate the data by day, count the number of rides in a day and aggregate back. The resulting dataframes have only one column
-daily_2019 = df_19.groupby(df_19['started_at'].dt.date).count()['started_at']
-daily_2020 = df_20.groupby(df_20['started_at'].dt.date).count()['started_at']
+#We now separate the data by day, and aggregate it by counting the total rides and summing the total duration. The resulting dataframes have two columns
+daily_2019 = df_19.groupby(df_19['started_at'].dt.date)['duration'].aggregate([np.size,np.sum])
+daily_2020 = df_20.groupby(df_20['started_at'].dt.date)['duration'].aggregate([np.size,np.sum])
 
+#Set columns and dataframes names
+daily_2019.columns = ['Total rides','Total duration']
+daily_2020.columns = ['Total rides','Total duration']
 daily_2019.name = 'Rides 2019'
 daily_2020.name = 'Rides 2020'
-daily_2019.index.name = 'Day'
-daily_2020.index.name = 'Day'
+
+#As the index we use the day of the year (number of day in the year) instead of the date, so that they are comparable
+daily_2019.index = daily_2019.index.astype("datetime64[ns]").dayofyear
+daily_2020.index = daily_2020.index.astype("datetime64[ns]").dayofyear
+
+#We reindex against the union of the indexes. This is needed because in a certain year there may be missing data for a particular day, and we are filling those days with NaN data. The reason we are doing this is because when performing operations like computations and unions it is easier to have matching indices (and we can also easily refer to missing data by checking NaNs).
+newindex = daily_2019.index.union(daily_2020.index)
+daily_2019 = daily_2019.reindex(newindex)
+daily_2020 = daily_2020.reindex(newindex)
+
+daily_2019.index.name = 'DOY'
+daily_2020.index.name = 'DOY'
+
+#Form big dataframe with union of the data
+daily = pd.concat([daily_2019,daily_2020],axis=1)
+
+#We compute the relative variation, day-by-day, in both total rides and total duration
+variation_daily = ((daily_2020 / daily_2019) - 1)*100
+
+#For the moment we avoid this passage
+#We drop the rows where the computed values are NaN. We use isnull() to detect NaN values, and any(axis=1) to get a series of boolean values with True only in rows where there was at least one True value (i.e. at least one NaN).
+#variation_daily = variation_daily.drop(variation_daily[variation_daily.isnull().any(axis=1)].index)
 
 #We compute the 5-day rolling average of number of rides in both years
 rolling_2019 = daily_2019.rolling(window=5,min_periods=3).mean()
