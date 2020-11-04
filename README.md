@@ -35,7 +35,7 @@ For ease of use and transparency, the CSV files ['04-2019.csv']('04-2019.csv') a
 
 ## Estimate of variation in mobility and use as proxy for overall mobility (work in progress) ##
 
-The second study aims to estimate the variation in the public bike mobility, and to compare it agains the variation in the overall mobility as estimated by Google. This could give some indication of how good of a proxy public bike mobility is, with respect to overall mobility. This study is in a development stage.
+The second study aims to estimate the variation in the public bike mobility, and to compare it agains the variation in the overall mobility as estimated by Google. This could give some indication of how good of a proxy public bike mobility is, with respect to overall mobility. This study is in a development stage. It is hosted on the branch ``2020-summer-analysis``.
 
 ### Code ###
 
