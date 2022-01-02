@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.metrics import r2_score
 from public_bikes_functions import load_years
 from plot_google import load_google
 
@@ -93,13 +94,17 @@ df_google = load_google()
 variation_rolling.columns = ['Total rides variation','Total duration variation']
 df_joined = df_google.join(variation_rolling,on="doy",how="left") #dataframe with joined data
 
+df_months = df_joined[df_joined['date'].dt.month.isin(months)]
 
-#Plot Google's and public bikes' data alongside. What we are plotting is the relative variation from baseline, from 2019 to 2020, in mobility. Google's data pertains all the mobility in transit stations, while the bikes' data only refers to the use of public bikes. The comparison attempt to evaluate how well the data on public bikes describes broader data.
+#Plot Google's and public bikes' data alongside. What we are plotting is the relative variation from baseline, from 2019 to 2020, in mobility. Google's data pertains all the mobility in transit stations, while the bikes' data only refers to the use of public bikes. The comparison attempts to evaluate how well the data on public bikes describes broader data.
 plt.figure()
-sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='transit_stations_percent_change_from_baseline',color='tab:blue',label='Google')
-sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='Total rides variation',color='tab:orange',label='Public bikes')
+sns_plot = sns.lineplot(data=df_months,x='doy',y='transit_stations_percent_change_from_baseline',color='tab:blue',label='Google')
+sns_plot = sns.lineplot(data=df_months,x='doy',y='Total rides variation',color='tab:orange',label='Public bikes')
 plt.legend()
 plt.title("Comparison of Google's variation and public bikes variation")
 plt.xlabel("Day of the year")
 plt.ylabel("Percent variation from baseline")
 plt.savefig(FIGURES_FOLDER + 'comparison_variations.pdf')
+
+_df = df_months.dropna(axis='index',subset=['Total rides variation'])
+print(r2_score(_df['transit_stations_percent_change_from_baseline'],_df['Total rides variation']))
