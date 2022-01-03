@@ -89,6 +89,7 @@ plt.savefig(FIGURES_FOLDER + 'rolling_variation.pdf')
 
 #Load Google's dataset, for comparison
 df_google = pd.concat([mobility_report_functions.load_google(2020),mobility_report_functions.load_google(2021)])
+df_google = df_google.loc[df_google['sub_region_1'] == 'Oslo',:].reset_index(drop=True)
 
 #We join the Dataframe with Google's data with the one with rolling variation data. We want to join on the "day of the year" feature, which is the index in the rolling Dataframe, named "doy" in the Google dataframe. Since it is the same name of the rolling dataframe index, joining on "doy" is straightforward.
 #If variation were a Series, then it would have been joined in the table as a column, but the name of the column would have been the name of the series so it would have needed a name (nameless series throw errors).
