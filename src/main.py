@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-#This scripts fetches the data from the Oslo Bysykkel server, and then plots the relative variation in bikes mobility. It does so for the months specified in the "months" list. The variation is computed between 5-days rolling averages.
+#This scripts fetches the data from the Oslo Bysykkel server, and then plots the relative variation in bikes mobility. It does so for the months specified in the "months" list. The variation is computed between 7-days rolling averages.
 
 import pandas as pd
 import numpy as np
@@ -51,9 +51,9 @@ variation_daily = ((daily_2020 / daily_2019) - 1)*100
 #We drop the rows where the computed values are NaN. We use isnull() to detect NaN values, and any(axis=1) to get a series of boolean values with True only in rows where there was at least one True value (i.e. at least one NaN).
 #variation_daily = variation_daily.drop(variation_daily[variation_daily.isnull().any(axis=1)].index)
 
-#We compute the 5-day rolling average of number of rides in both years
-rolling_2019 = daily_2019.rolling(window=5,min_periods=3).mean()
-rolling_2020 = daily_2020.rolling(window=5,min_periods=3).mean()
+#We compute the 7-day rolling average of number of rides in both years
+rolling_2019 = daily_2019.rolling(window=7,min_periods=3).mean()
+rolling_2020 = daily_2020.rolling(window=7,min_periods=3).mean()
 
 #Form big dataframe with union of the rolling data
 rolling = pd.concat([rolling_2019,rolling_2020],axis=1)
@@ -63,7 +63,7 @@ variation_rolling = ((rolling_2020/rolling_2019) - 1)*100
 
 #Plot the rolling average of total rides for 2019 and 2020 alongside
 rolling['Total rides'].plot(color=['tab:blue','tab:orange'])
-plt.title("5-day Total Rides rolling average in 2019 and 2020")
+plt.title("7-day Total Rides rolling average in 2019 and 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Number of rides")
 plt.legend(['2019','2020'])
@@ -71,7 +71,7 @@ plt.savefig(FIGURES_FOLDER + 'rolling_total_average.pdf')
 
 #Plot the rolling average of total rides duration for 2019 and 2020 alongside
 rolling['Total duration'].plot(color=['tab:blue','tab:orange'])
-plt.title("5-day Total Duration rolling average in 2019 and 2020")
+plt.title("7-day Total Duration rolling average in 2019 and 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Total duration")
 plt.legend(['2019','2020'])
@@ -80,7 +80,7 @@ plt.savefig(FIGURES_FOLDER + 'rolling_total_duration.pdf')
 #Plot the relative variation
 plt.figure()
 variation_rolling.plot()
-plt.title("5-day Rolling relative variation in the number and duration of rides from 2019 to 2020")
+plt.title("7-day Rolling relative variation in the number and duration of rides from 2019 to 2020")
 plt.xlabel("Day of the year")
 plt.ylabel("Percentage variation")
 plt.savefig(FIGURES_FOLDER + 'rolling_variation.pdf')
