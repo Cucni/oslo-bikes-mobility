@@ -6,8 +6,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from public_bikes_functions import load_years
-from plot_google import load_google
+import public_bikes_functions
+import mobility_report_functions
 
 plt.style.use('seaborn')
 
@@ -15,11 +15,11 @@ plt.style.use('seaborn')
 FIGURES_FOLDER = 'figures/'
 
 #Range of months that we are analyzing
-months = ['05','06','07','08','09']
+months = np.arange(5,13)
 
 #We build the dataset of public bikes data for those years
-df_19 = load_years('2019',months)
-df_20 = load_years('2020',months)
+df_19 = public_bikes_functions.load_months(2019,months)
+df_20 = public_bikes_functions.load_months(2020,months)
 
 #We now separate the data by day, and aggregate it by counting the total rides and summing the total duration. The resulting dataframes have two columns
 daily_2019 = df_19.groupby(df_19['started_at'].dt.date)['duration'].aggregate([np.size,np.sum])
@@ -42,7 +42,7 @@ daily_2019 = daily_2019.reindex(newindex)
 daily_2020 = daily_2020.reindex(newindex)
 
 #Form big dataframe with union of the data
-daily = pd.concat([daily_2019,daily_2020],axis=1)
+#daily = pd.concat([daily_2019,daily_2020],axis=1)
 
 #We compute the relative variation, day-by-day, in both total rides and total duration
 variation_daily = ((daily_2020 / daily_2019) - 1)*100
