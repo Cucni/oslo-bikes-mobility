@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import public_bikes_functions
 import mobility_report_functions
+import visualizations
 
 plt.style.use('seaborn')
 
@@ -58,20 +59,10 @@ rolling = pd.concat([rolling_2019,rolling_2020],axis=1)
 variation_rolling = ((rolling_2020/rolling_2019) - 1)*100
 
 #Plot the rolling average of total rides for 2019 and 2020 alongside
-rolling['Total rides'].plot(color=['tab:blue','tab:orange'])
-plt.title("7-day Total Rides rolling average in 2019 and 2020")
-plt.xlabel("Day of the year")
-plt.ylabel("Number of rides")
-plt.legend(['2019','2020'])
-plt.savefig(FIGURES_FOLDER + 'rolling_total_average.pdf')
+visualizations.plot_rolling_average(rolling['Total rides'])
 
 #Plot the rolling average of total rides duration for 2019 and 2020 alongside
-rolling['Total duration'].plot(color=['tab:blue','tab:orange'])
-plt.title("7-day Total Duration rolling average in 2019 and 2020")
-plt.xlabel("Day of the year")
-plt.ylabel("Total duration")
-plt.legend(['2019','2020'])
-plt.savefig(FIGURES_FOLDER + 'rolling_total_duration.pdf')
+visualizations.plot_rolling_average(rolling['Total duration'])
 
 #Plot the relative variation
 plt.figure()
