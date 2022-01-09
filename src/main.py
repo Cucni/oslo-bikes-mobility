@@ -17,39 +17,35 @@ FIGURES_FOLDER = 'figures/'
 #Range of months that we are analyzing
 months = np.arange(5,13)
 
-#We build the dataset of public bikes data for those years
+def extract_totals(df):
+    '''Resamples data by day and computes total rides and total rides duration.'''
+    return df.resample('D',on='started_at')['duration'].agg([np.size,np.sum])
+
+#Set columns and dataframes names
+def name_columns(df,year):
+    '''Sets the correct names for the columns containing total rides and total rides duration. Also sets the dataframe name to "Rides YYYY".'''
+    df.columns = ['Total rides','Total duration']
+    df.name = 'Rides {:}'.format(year)
+
+    return df
+
+#As the index we use the day of the year (number of day in the year) instead of the date, so that they are comparable
+def index_with_doy(df):
+    '''Creates columns containing day and number of day in the year, then sets this last as index.'''
+    df = df.assign(day = lambda x: x.index.date,
+              doy = lambda x: x.index.dayofyear
+       ).pipe(lambda x: x.set_index('doy'))
+    return df
+
+
+#Load datasets of public bikes data
 df_19 = public_bikes_functions.load_months(2019,months)
 df_20 = public_bikes_functions.load_months(2020,months)
 
-#We now separate the data by day, and aggregate it by counting the total rides and summing the total duration. The resulting dataframes have two columns
-daily_2019 = df_19.groupby(df_19['started_at'].dt.date)['duration'].aggregate([np.size,np.sum])
-daily_2020 = df_20.groupby(df_20['started_at'].dt.date)['duration'].aggregate([np.size,np.sum])
+#Extract total rides and total duration in structured dataframe
+daily_2019 = df_19.pipe(extract_totals).pipe(name_columns,year=2019).pipe(index_with_doy)
+daily_2020 = df_20.pipe(extract_totals).pipe(name_columns,year=2020).pipe(index_with_doy)
 
-#Set columns and dataframes names
-daily_2019.columns = ['Total rides','Total duration']
-daily_2020.columns = ['Total rides','Total duration']
-daily_2019.name = 'Rides 2019'
-daily_2020.name = 'Rides 2020'
-
-#As the index we use the day of the year (number of day in the year) instead of the date, so that they are comparable
-daily_2019.index = daily_2019.index.astype("datetime64[ns]").dayofyear
-daily_2020.index = daily_2020.index.astype("datetime64[ns]").dayofyear
-
-#We reindex against the union of the indexes. This is needed because in a certain year there may be missing data for a particular day, and we are filling those days with NaN data. The reason we are doing this is because when performing operations like computations and unions it is easier to have matching indices (and we can also easily refer to missing data by checking NaNs).
-newindex = daily_2019.index.union(daily_2020.index)
-newindex.name = 'doy'
-daily_2019 = daily_2019.reindex(newindex)
-daily_2020 = daily_2020.reindex(newindex)
-
-#Form big dataframe with union of the data
-#daily = pd.concat([daily_2019,daily_2020],axis=1)
-
-#We compute the relative variation, day-by-day, in both total rides and total duration
-variation_daily = ((daily_2020 / daily_2019) - 1)*100
-
-#For the moment we avoid this passage
-#We drop the rows where the computed values are NaN. We use isnull() to detect NaN values, and any(axis=1) to get a series of boolean values with True only in rows where there was at least one True value (i.e. at least one NaN).
-#variation_daily = variation_daily.drop(variation_daily[variation_daily.isnull().any(axis=1)].index)
 
 #We compute the 7-day rolling average of number of rides in both years
 rolling_2019 = daily_2019.rolling(window=7,min_periods=3).mean()
