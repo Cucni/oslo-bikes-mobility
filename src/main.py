@@ -84,10 +84,7 @@ df_joined = df_google.join(variation_rolling,on="doy",how="left") #dataframe wit
 
 #Plot Google's and public bikes' data alongside. What we are plotting is the relative variation from baseline, from 2019 to 2020, in mobility. Google's data pertains all the mobility in transit stations, while the bikes' data only refers to the use of public bikes. The comparison attempt to evaluate how well the data on public bikes describes broader data.
 plt.figure()
-sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='transit_stations_percent_change_from_baseline',color='tab:blue',label='Google')
-sns_plot = sns.lineplot(data=df_joined[df_joined['date'].dt.month.isin(months)],x='doy',y='Total rides variation',color='tab:orange',label='Public bikes')
-plt.legend()
-plt.title("Comparison of Google's variation and public bikes variation")
+df_joined[df_joined['date'].dt.month.isin(months)].plot(x='doy',y=['transit_stations_percent_change_from_baseline','Total rides variation'],color=['tab:blue','tab:orange'],label=['Mobility reports','Public bikes data'],title="Comparison of Mobility reports' variation and public bikes variation")
 plt.xlabel("Day of the year")
 plt.ylabel("Percent variation from baseline")
 plt.savefig(FIGURES_FOLDER + 'comparison_variations.pdf')
