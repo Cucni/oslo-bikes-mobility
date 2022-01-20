@@ -11,6 +11,4 @@ def plot_rolling_average(series,window=7,min_periods=3):
     plt.xlabel("Day of the year")
     plt.ylabel(series.columns[0].capitalize())
     plt.legend(['2019','2020'])
-    plt.show()
     plt.savefig(FIGURES_FOLDER + 'rolling_{:}.pdf'.format(series.columns[0].lower().replace(' ','_')))
-    print(FIGURES_FOLDER + 'rolling_{:}.pdf'.format(series.columns[0].lower().replace(' ','_')))
