@@ -8,8 +8,10 @@ import matplotlib.pyplot as plt
 
 plt.style.use('seaborn')
 
-def load_google():
-    df = pd.read_csv("data/clean/Google-Global_Mobility_Report.csv",parse_dates=[7])
+DATA_FOLDER_RAW = 'data/raw/'
+
+def load_google(year):
+    df = pd.read_csv(DATA_FOLDER_RAW + "{:}_NO_Region_Mobility_Report.csv".format(year),parse_dates=[8])
     df["doy"] = df["date"].dt.dayofyear
     return df
 
