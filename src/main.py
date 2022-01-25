@@ -80,9 +80,8 @@ df_google = df_google.loc[df_google['sub_region_1'] == 'Oslo',:].reset_index(dro
 #We join the Dataframe with Google's data with the one with rolling variation data. We want to join on the "day of the year" feature, which is the index in the rolling Dataframe, named "doy" in the Google dataframe. Since it is the same name of the rolling dataframe index, joining on "doy" is straightforward.
 #If variation were a Series, then it would have been joined in the table as a column, but the name of the column would have been the name of the series so it would have needed a name (nameless series throw errors).
 variation_rolling.columns = ['Total rides variation','Total duration variation']
-df_joined = df_google.join(variation_rolling,on="doy",how="left") #dataframe with joined data
+df_months = df_google.pipe(lambda df_: df_.join(variation_rolling,on="doy",how="left")).pipe(lambda df_: df_.loc[df_['date'].dt.month.isin(months),:]) #dataframe with joined data, restricted to the relevant months
 
-df_months = df_joined[df_joined['date'].dt.month.isin(months)]
 
 #Plot Google's and public bikes' data alongside. What we are plotting is the relative variation from baseline, from 2019 to 2020, in mobility. Google's data pertains all the mobility in transit stations, while the bikes' data only refers to the use of public bikes. The comparison attempts to evaluate how well the data on public bikes describes broader data.
 plt.figure()
