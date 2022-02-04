@@ -4,6 +4,7 @@
 
 import pandas as pd
 from os.path import exists
+from os import environ
 
 DATA_FOLDER_RAW = 'data/raw/'
 
@@ -11,7 +12,8 @@ DATA_FOLDER_RAW = 'data/raw/'
 def load_monthly_data(year,month):
     if not exists(DATA_FOLDER_RAW + '{:}-{:02d}.csv'.format(year,month)):
         df = pd.read_csv('https://data.urbansharing.com/oslobysykkel.no/trips/v1/{:}/{:02d}.csv'.format(year,month),parse_dates=[0,1])
-        df.to_csv(DATA_FOLDER_RAW + '{:}-{:02d}.csv'.format(year,month),index=False)
+        if not environ.get("GITLAB_CI")=='true':
+            df.to_csv(DATA_FOLDER_RAW + '{:}-{:02d}.csv'.format(year,month),index=False)
     else:
         df = pd.read_csv(DATA_FOLDER_RAW + '{:}-{:02d}.csv'.format(year,month),parse_dates=[0,1])
 
