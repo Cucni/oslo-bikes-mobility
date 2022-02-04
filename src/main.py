@@ -50,8 +50,8 @@ daily_2020 = df_20.pipe(extract_totals).pipe(name_columns,year=2020).pipe(index_
 
 
 #We compute the 7-day rolling average of number of rides in both years
-rolling_2019 = daily_2019.rolling(window=7,min_periods=3).mean()
-rolling_2020 = daily_2020.rolling(window=7,min_periods=3).mean()
+rolling_2019 = daily_2019[['Total rides','Total duration']].rolling(window=7,min_periods=3).mean()
+rolling_2020 = daily_2020[['Total rides','Total duration']].rolling(window=7,min_periods=3).mean()
 
 #Form big dataframe with union of the rolling data
 rolling = pd.concat([rolling_2019,rolling_2020],axis=1)
