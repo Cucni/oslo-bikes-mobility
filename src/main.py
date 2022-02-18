@@ -84,11 +84,9 @@ df_months = df_google.pipe(lambda df_: df_.join(variation_rolling,on="doy",how="
 
 
 #Plot Google's and public bikes' data alongside. What we are plotting is the relative variation from baseline, from 2019 to 2020, in mobility. Google's data pertains all the mobility in transit stations, while the bikes' data only refers to the use of public bikes. The comparison attempts to evaluate how well the data on public bikes describes broader data.
+r2 = df_months.dropna(axis='index',subset=['Total rides variation']).pipe(lambda x: r2_score(x['transit_stations_percent_change_from_baseline'],x['Total rides variation']))
 plt.figure()
-df_months.plot(x='doy',y=['transit_stations_percent_change_from_baseline','Total rides variation'],color=['tab:blue','tab:orange'],label=['Mobility reports','Public bikes data'],title="Comparison of Mobility reports' variation and public bikes variation")
+df_months.plot(x='doy',y=['transit_stations_percent_change_from_baseline','Total rides variation'],color=['tab:blue','tab:orange'],label=['Mobility reports','Public bikes data'],title="Comparison of Mobility reports' variation and public bikes variation, R² {:.3f}".format(r2))
 plt.xlabel("Day of the year")
 plt.ylabel("Percent variation from baseline")
 plt.savefig(FIGURES_FOLDER + 'comparison_variations.pdf')
-
-df_months = df_months.dropna(axis='index',subset=['Total rides variation'])
-print(r2_score(df_months['transit_stations_percent_change_from_baseline'],df_months['Total rides variation']))
